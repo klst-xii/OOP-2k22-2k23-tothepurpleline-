@@ -4,6 +4,8 @@ from django.urls import path
 from .views import home_page, contact_page
 from accounts.views import RegisterView
 
+#
+
 urlpatterns = [
     path('', home_page),
     path('contact/', contact_page),
