@@ -1,7 +1,36 @@
 from django import forms
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate
 
 User = get_user_model()
+
+class LoginForm(forms.Form):
+    email = forms.EmailField(widget=forms.EmailInput(
+        attrs = {
+            'placeholder': 'Email'
+        }
+    ))
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs = {
+        'placeholder': 'Password'
+        }
+    ))
+
+    def clean(self):
+        username = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
+        user = authenticate (username=username, password=password)
+
+        if not user or not user.is_active:
+            raise forms.ValidationError("No entry")
+        return self.cleaned_data
+
+    def login(self, request):
+        username = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        return user
 
 class RegisterForm(forms.ModelForm):
     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={
@@ -34,12 +63,12 @@ class RegisterForm(forms.ModelForm):
             password2 = self.cleaned_data.get('password2')
 
             if password2 != password1:
-                raise forms.ValidationError("Password does not match")
+                raise forms.ValidationError("Password doesnot match")
             return password2
 
         def save(self, commit=True):
             user = super(RegisterForm, self).save(commit=False)
-            user.set_password(self.cleaned_data["password1"])
+            user.set_password(self.clean_password2["password1"])
 
             if commit:
                 user.save()
