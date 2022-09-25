@@ -5,20 +5,20 @@ User = get_user_model()
 
 class LoginForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(
-        attrs = {
+        attrs={
             'placeholder': 'Email'
         }
     ))
     password = forms.CharField(widget=forms.PasswordInput(
-        attrs = {
-        'placeholder': 'Password'
+        attrs={
+            'placeholder': 'Password'
         }
     ))
 
     def clean(self):
         username = self.cleaned_data.get('email')
         password = self.cleaned_data.get('password')
-        user = authenticate (username=username, password=password)
+        user = authenticate(username=username, password=password)
 
         if not user or not user.is_active:
             raise forms.ValidationError("No entry")
@@ -56,22 +56,22 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name')
+        fields = ('email', 'first_name', 'last_name',)
 
-        def clean_password2(self):
-            password1 = self.cleaned_data.get('password1')
-            password2 = self.cleaned_data.get('password2')
+    def clean_password2(self):
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
 
-            if password2 != password1:
-                raise forms.ValidationError("Password doesnot match")
-            return password2
+        if password1 and password2 and password2 != password1:
+            raise forms.ValidationError("Password does not match")
+        return password2
 
-        def save(self, commit=True):
-            user = super(RegisterForm, self).save(commit=False)
-            user.set_password(self.clean_password2["password1"])
+    def save(self, commit=True):
+        user = super(RegisterForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
 
-            if commit:
-                user.save()
-            return user
+        if commit:
+            user.save()
+        return user
 
 
