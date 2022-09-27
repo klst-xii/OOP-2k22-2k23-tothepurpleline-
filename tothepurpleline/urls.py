@@ -6,6 +6,8 @@ from accounts.views import RegisterView, login_page
 from django.contrib.auth import views as auth_views
 from products.views import ProductListView
 from products.views import ProductDetailView
+from products.views import ProductFeaturedListView
+from products.views import ProductFeaturedDetailView
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -15,6 +17,8 @@ urlpatterns = [
     path('', home_page, name='home'),
     path('contact/', contact_page),
     path('register/', RegisterView.as_view(), name='register'),
+    path('featured/', ProductFeaturedListView.as_view(), name='featured_list' ),
+    path('feature/<int:pk>', ProductFeaturedDetailView.as_view(), name='featured_detailed'),
     path('logout/', auth_views.LogoutView.as_view(template_name="auth/logout.html"), name='logout'),
     path('login', login_page, name='login'),
     path('admin/', admin.site.urls),
