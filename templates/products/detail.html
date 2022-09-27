@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Product</title>
     {% include 'base/css.html' %}
     {% include 'base/js.css.html' %}
 </head>
@@ -10,7 +10,8 @@
 {% include 'base/navbar.html' %}
 
 {{ objects.title }} <br>
-{{ object.description }}
+{{ object.description }} <br>
+<img src="{{ object.image.url }}">
 
 </body>
 </html>
