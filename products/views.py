@@ -8,7 +8,7 @@ from django.views.generic import DetailView
 class ProductFeaturedListView(ListView):
     template_name = "product/list.html"
     
-    def get_queryset(seld, *args, **kwargs):
+    def get_queryset(self, *args, **kwargs):
         request = self.request
         return Product.objects.all().featured()
 
