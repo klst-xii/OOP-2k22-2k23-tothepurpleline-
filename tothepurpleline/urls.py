@@ -15,17 +15,11 @@ urlpatterns = [
     path('', home_page, name='home'),
     path('contact/', contact_page),
     path('register/', RegisterView.as_view(), name='register'),
-    path('users/', list_user, name='list_iuser'),
-    path('update/<int:id>', update, name='update'),
-    path('featured/', ProductFeaturedListView.as_view(), name='feature_list'),
-    path('products/', ProductListView.as_view(), name='product_list'),
-    path('featured/<int:pk>', ProductFeaturedDetailView.as_view(), name='featured_detailed'),
-    path('products/<int:pk>', ProductDetailView.as_view(), name='detailed'),
-    path('delete/<int:id>', delete, name='delete'),
-    path('update/udaterecord/<int:id>' updaterecord, name='updaterecord')
     path('logout/', auth_views.LogoutView.as_view(template_name="auth/logout.html"), name='logout'),
     path('login', login_page, name='login'),
     path('admin/', admin.site.urls),
+    path('products/', ProductListView.as_view()),
+    path('products/<int:pk>', ProductDetailView.as_view(), name='detailed'),
 ]
 
 if settings.DEBUG:
