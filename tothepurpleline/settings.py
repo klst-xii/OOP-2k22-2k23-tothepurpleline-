@@ -42,8 +42,6 @@ INSTALLED_APPS = [
     'django.shortcuts',
 
 
-
-
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
