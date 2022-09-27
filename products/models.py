@@ -41,6 +41,7 @@ class ProductManager(models.Manager):
 
 class Product(models.Model):
     title = models.CharField(max_length=50)
+    slug = models.SlugField(default="Beat") # After making migrations remove the default="Beat" from your SlugField and replace it with blank="True" Admin Product Table you should be able to see that all of the products registered will have "tae" as Slug
     description = models.TextField()
     price = models.DecimalField(decimal_places=2, max_digits=20, default=10.00)
     image = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
