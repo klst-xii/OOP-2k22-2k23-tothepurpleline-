@@ -10,9 +10,10 @@ class ProductFeaturedListView(ListView):
     
     def get_queryset(seld, *args, **kwargs):
         request = self.request
-        return Product.objects.all()
+        return Product.objects.all().featured()
 
 class ProductFeaturedDetailView(DetailView):
+    queryset = Product.objects.all().featured()
      template_name = "products/detail.html"
         
      def get_context_data(self, *args, **kwargs):
