@@ -22,7 +22,7 @@ urlpatterns = [
     path('featured/<int:pk>', ProductFeaturedDetailView.as_view(), name='featured_detailed'),
     path('products/<int:pk>', ProductDetailView.as_view(), name='detailed'),
     path('delete/<int:id>', delete, name='delete'),
-    path('update/udaterecord/<int:id>' updaterecord, name+'updaterecord')
+    path('update/udaterecord/<int:id>' updaterecord, name='updaterecord')
     path('logout/', auth_views.LogoutView.as_view(template_name="auth/logout.html"), name='logout'),
     path('login', login_page, name='login'),
     path('admin/', admin.site.urls),
