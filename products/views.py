@@ -14,7 +14,7 @@ class ProductFeaturedListView(ListView):
 
 class ProductFeaturedDetailView(DetailView):
     queryset = Product.objects.all().featured()
-     template_name = "products/detail.html"
+    template_name = "products/detail.html"
         
      def get_context_data(self, *args, **kwargs):
         context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
@@ -25,3 +25,7 @@ class ProductFeaturedDetailView(DetailView):
         pk = self.kwargs.get('pk')
         return Product.objects.filter(pk=pk)
 
+class ProductDetailSlugView(DetailView):
+    queryset = Product.objects.all().featured()
+    template_name = "products/detail.html"
+    
