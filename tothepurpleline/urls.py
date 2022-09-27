@@ -18,7 +18,7 @@ urlpatterns = [
     path('contact/', contact_page),
     path('register/', RegisterView.as_view(), name='register'),
     path('featured/', ProductFeaturedListView.as_view(), name='featured_list' ),
-    path('feature/<int:pk>', ProductFeaturedDetailView.as_view(), name='featured_detailed'),
+    path('featured/<int:pk>', ProductFeaturedDetailView.as_view(), name='featured_detailed'),
     path('logout/', auth_views.LogoutView.as_view(template_name="auth/logout.html"), name='logout'),
     path('login', login_page, name='login'),
     path('admin/', admin.site.urls),
