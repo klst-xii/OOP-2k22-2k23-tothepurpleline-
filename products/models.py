@@ -31,7 +31,7 @@ class ProductManager(models.Manager):
         return self.get_queryset().active()
     
     def featured(self):
-        return self. get_queryset().featured()
+        return self.get_queryset().featured()
     
     def get_by_id(self, id):
         qs = self.get_queryset().filter(id=id)
