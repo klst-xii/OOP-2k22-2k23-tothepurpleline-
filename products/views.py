@@ -5,14 +5,14 @@ from django.views.generic import ListView
 from django.views.generic import DetailView
 
 
-class ProductListView(ListView):
+class ProductFeaturedListView(ListView):
     template_name = "product/list.html"
     
     def get_queryset(seld, *args, **kwargs):
         request = self.request
         return Product.objects.all()
 
-class ProductDetailView(DetailView):
+class ProductFeaturedDetailView(DetailView):
      template_name = "products/detail.html"
         
      def get_context_data(self, *args, **kwargs):
