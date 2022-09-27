@@ -2,7 +2,9 @@ import random
 import os
 
 from django.db import models
-from django.db.models import Model
+
+from .utils import unique_slug_generator
+from django.db.models.signals import pre_save
 
 
 def get_filename_ext(filepath):
@@ -16,6 +18,11 @@ def upload_image_path(instance, filename):
     final_name = '{new_filename}{ext}'.format(new_filename=new_filename, ext=ext)
     return "products/{new_filename}/{final_name}".format(new_filename=new_filename, final_name=final_name)
 
+def product_pre_save_reciever(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance)
+pre_save.connect(product_pre_save_reciever, sender=Product)
+        
 class ProductQuerySet(models.query.QuerySet):
     def active(self):
         return self.filter(active=True)
