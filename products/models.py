@@ -4,6 +4,10 @@ import os
 from django.db import models
 from django.db.models import Model
 
+from .utils import unique_slug_generator
+from django.db.models.signals import pre_save
+
+
 
 def get_filename_ext(filepath):
     base_name = os.path.basename(filepath)
@@ -15,6 +19,8 @@ def upload_image_path(instance, filename):
     name, ext = get_filename_ext(filename)
     final_name = '{new_filename}{ext}'.format(new_filename=new_filename, ext=ext)
     return "products/{new_filename}/{final_name}".format(new_filename=new_filename, final_name=final_name)
+
+
 
 class ProductQuerySet(models.query.QuerySet):
     def active(self):
@@ -38,6 +44,7 @@ class ProductManager(models.Manager):
 
 class Product(models.Model):
     title = models.CharField(max_length=50)
+    slug = models.SlugField(blank=True, unique=True)
     description = models.TextField()
     price = models.DecimalField(decimal_places=2, max_digits=20, default=10.00)
     image = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
@@ -54,3 +61,8 @@ class Product(models.Model):
 
     def ProductListView(self):
         return self.title
+
+def product_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance)
+pre_save.connect(product_pre_save_receiver, sender=Product)
