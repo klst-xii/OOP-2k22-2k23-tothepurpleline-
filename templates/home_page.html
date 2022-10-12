@@ -1,3 +1,6 @@
+<form action="{% url 'register' %}" method="post">
+<form action="{% url 'login' %}" method="post">
+{% csrf_token %}
 {% load static %}
 
 <!doctype html>
@@ -27,6 +30,19 @@
 
   <div class="text-center">
     <h1>Welcome to StudyCamp</h1>
+
+      <section class="text-gray-400 bg-gray-900 body-font">
+        <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
+        <div class="text-center lg:w-2/3 w-full">
+        <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-black"></h1>
+        <p class="leading-relaxed mb-8">Description ng StudyCamp</p>
+        <a class="flex justify-center">
+        <button class="inline-flex text-black bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg" type="submit" name='mybtn1' value={{register_path}}>Register</button>
+        <button class="ml-4 inline-flex text-gray-400 bg-gray-800 border-0 py-2 px-6 focus:outline-none hover:bg-gray-700 hover:text-white rounded text-lg" type="submit" name='mybtn2' value={{login_path}}>Login</button>
+      </div>
+    </div>
+  </div>
+</section>
 
   </body>
 </html>
