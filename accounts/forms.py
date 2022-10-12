@@ -74,4 +74,3 @@ class RegisterForm(forms.ModelForm):
             user.save()
         return user
 
-
