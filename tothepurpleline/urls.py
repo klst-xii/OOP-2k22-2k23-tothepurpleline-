@@ -17,7 +17,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', home_page, name='home'),
-    path('contact/', contact_page),
+    path('contact/', contact_page, name='contact'),
     path('register/', RegisterView.as_view(), name='register'),
     path('featured/', ProductFeaturedListView.as_view(), name='featured_list' ),
     # path('featured/<int:pk>', ProductFeaturedDetailView.as_view(), name='featured_detailed'),
@@ -25,7 +25,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name="auth/logout.html"), name='logout'),
     path('login', login_page, name='login'),
     path('admin/', admin.site.urls),
-    path('products/', ProductListView.as_view()),
+    path('products/', ProductListView.as_view(), name='products'),
     path('products/<int:pk>', ProductDetailView.as_view(), name='detailed'),
 ]
 
