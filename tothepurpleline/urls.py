@@ -10,7 +10,7 @@ from products.views import ProductDetailView
 from products.views import ProductFeaturedListView
 from products.views import ProductFeaturedDetailView
 from products.views import ProductDetailSlugView
-from socials.views import PostListView, PostDetailView
+from socials.views import PostListView, PostDetailView, PostEditView, PostDeleteView
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -30,6 +30,8 @@ urlpatterns = [
     path('products/<int:pk>', ProductDetailView.as_view(), name='detailed'),
     path('socials/', PostListView.as_view(), name='post-list'),
     path('socials/<int:pk>', PostDetailView.as_view(), name='post-detail'),
+    path('socials/edit/<int:pk>', PostEditView.as_view(), name='post-edit'),
+    path('socials/delete/<int:pk>', PostDeleteView.as_view(), name='post-delete'),
 ]
 
 if settings.DEBUG:
