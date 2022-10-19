@@ -40,10 +40,13 @@ INSTALLED_APPS = [
     'accounts',
     'products',
     'django.shortcuts',
+    'socials',
+    'crispy_forms'
 
 
 ]
 
+CRISPY_TEMPLATE_PACK = 'uni_form'
 AUTH_USER_MODEL = 'accounts.User'
 
 MIDDLEWARE = [

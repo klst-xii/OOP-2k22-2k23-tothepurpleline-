@@ -10,6 +10,7 @@ from products.views import ProductDetailView
 from products.views import ProductFeaturedListView
 from products.views import ProductFeaturedDetailView
 from products.views import ProductDetailSlugView
+from socials.views import PostListView
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -27,6 +28,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('products/', ProductListView.as_view(), name='products'),
     path('products/<int:pk>', ProductDetailView.as_view(), name='detailed'),
+    path('socials/', PostListView.as_view(), name='post-list'),
 ]
 
 if settings.DEBUG:
