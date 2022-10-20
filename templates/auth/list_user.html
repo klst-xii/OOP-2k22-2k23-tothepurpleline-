@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+</head>
+<body>
+    <th class="col text-center">ID</th>
+    <th class="col text-center">Username</th>
+    <th class="col text-center">Firstname</th>
+    <th class="col text-center" colspan="2">Action</th>
+
+    {% for foo in model %}
+    <div>
+        <td class="col text-center" data-label="ID">{{ foo.id }}</td>
+        <td class="col text-center" data-label="Rewards">{{ foo.email }}</td>
+        <td class="col text-center" data-label="Points">{{ foo.first_name }}</td>
+        <td>
+            <div class="col text-center">
+                <button class="update-btn btn btn-primary text-center" onclick="localStorage">
+                Update</button>
+            </div>
+        </td>
+
+    </div>
+    {% endfor %}
+</body>
+</html>

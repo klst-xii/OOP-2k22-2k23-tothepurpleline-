@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Products</title>
+    {% include 'base/css.html' %}
+    {% include 'base/js.css.html' %}
+</head>
+<body>
+{% include 'base/navbar.html' %}
+{% for object in object_list %}
+    Title: <a href = "{% url 'detailed' object.id %}"> {{ object.title }}</a><br>
+{% endfor %}
+
+{% if request.GET.q %}
+    <div class="col-12 col-md-6 mx-auto py-5">
+        {% include 'search/snippets/search_form.html' %}
+    </div>
+    <div class="col-12 mb-3">
+        Searched for <b>{{ query }}</b>
+        <hr/>
+    </div>
+{% else %}
+    <div class="col-12 col-md-6 mx-auto py-5">
+         {% include 'search/snippets/search_form.html' %}
+    </div>
+{% endif %}
+</body>
+</html>
