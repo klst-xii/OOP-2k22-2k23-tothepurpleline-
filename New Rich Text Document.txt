@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Products</title>
+    {% include 'base/css.html' %}
+    {% include 'base/js.css.html' %}
+</head>
+<body>
+{% include 'base/navbar.html' %}
+{% for object in object_list %}
+    Title: <a href = "{% url 'detailed' object.id %}"> {{ object.title }}</a><br>
+{% endfor %}
+
+
+</body>
+</html>{\rtf1}
