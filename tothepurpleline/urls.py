@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.urls import re_path
 
 from .views import home_page, contact_page
@@ -10,7 +10,7 @@ from products.views import ProductDetailView
 from products.views import ProductFeaturedListView
 from products.views import ProductFeaturedDetailView
 from products.views import ProductDetailSlugView
-from socials.views import PostListView, PostDetailView, PostEditView, PostDeleteView, CommentDeleteView, ProfileView, ProfileEditView
+from socials.views import PostListView, PostDetailView, PostEditView, PostDeleteView, CommentDeleteView
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -33,9 +33,7 @@ urlpatterns = [
     path('socials/edit/<int:pk>/', PostEditView.as_view(), name='post-edit'),
     path('socials/delete/<int:pk>/', PostDeleteView.as_view(), name='post-delete'),
     path('socials/<int:post_pk>/comment/delete/<int:pk>/', CommentDeleteView.as_view(), name='comment-delete'),
-    path('profile/<int:pk>/', ProfileView.as_view(), name='profile'),
-    path('profile/edit/<int:pk>/', ProfileEditView.as_view(), name='profile-edit'),
-
+    path('search/', include("search.urls", namespace='search')),
 ]
 
 if settings.DEBUG:
