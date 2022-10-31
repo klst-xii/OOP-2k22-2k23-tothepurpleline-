@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.urls import re_path
 
 from .views import home_page, contact_page
@@ -10,7 +10,7 @@ from products.views import ProductDetailView
 from products.views import ProductFeaturedListView
 from products.views import ProductFeaturedDetailView
 from products.views import ProductDetailSlugView
-from socials.views import PostListView, PostDetailView, PostEditView, PostDeleteView, CommentDeleteView, ProfileView, ProfileEditView
+from socials.views import PostListView, PostDetailView, PostEditView, PostDeleteView, CommentDeleteView, ProfileView, ProfileEditView, AddFollower, RemoveFollower
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -35,6 +35,9 @@ urlpatterns = [
     path('socials/<int:post_pk>/comment/delete/<int:pk>/', CommentDeleteView.as_view(), name='comment-delete'),
     path('profile/<int:pk>/', ProfileView.as_view(), name='profile'),
     path('profile/edit/<int:pk>/', ProfileEditView.as_view(), name='profile-edit'),
+    path('profile/<int:pk>/followers/add', AddFollower.as_view(), name='add-follower'),
+    path('profile/<int:pk>/followers/remove', RemoveFollower.as_view(), name='remove-follower'),
+    path("__reload__/", include('django_browser_reload.urls')),
 
 ]
 

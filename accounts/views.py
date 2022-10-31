@@ -15,7 +15,7 @@ def login_page(request):
         if user:
             print(user)
             login(request, user)
-            return redirect('home')
+            return redirect('post-list')
     context = {
         "form": form
     }
