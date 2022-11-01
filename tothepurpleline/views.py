@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .forms import ContactForm
 
 def home_page(request):
+    print(request.session.get('first_name', "Unknown"))
     return render(request, "home_page.html")
 
 

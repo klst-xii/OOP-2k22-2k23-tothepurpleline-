@@ -4,6 +4,7 @@ from django.urls import re_path
 
 from .views import home_page, contact_page
 from accounts.views import RegisterView, login_page
+from carts.views import cart_home
 from django.contrib.auth import views as auth_views
 from products.views import ProductListView
 from products.views import ProductDetailView
@@ -12,12 +13,14 @@ from products.views import ProductFeaturedDetailView
 from products.views import ProductDetailSlugView
 from socials.views import PostListView, PostDetailView, PostEditView, PostDeleteView, CommentDeleteView
 
+
 from django.conf import settings
 from django.conf.urls.static import static
 
 
 urlpatterns = [
     path('', home_page, name='home'),
+    path('cart/', cart_home, name='cart'),
     path('contact/', contact_page, name='contact'),
     path('register/', RegisterView.as_view(), name='register'),
     path('featured/', ProductFeaturedListView.as_view(), name='featured_list' ),
