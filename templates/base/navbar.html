@@ -1,124 +1,92 @@
-{##}
-{#<!DOCTYPE html>#}
-{#<html>#}
-{#<head>#}
-{#<meta name="viewport" content="width=device-width, initial-scale=1">#}
-{#<style>#}
-{#body {#}
-{#  margin: 0;#}
-{#  font-family: Arial, Helvetica, sans-serif;#}
-{#}#}
-{##}
-{#.topnav {#}
-{#  overflow: hidden;#}
-{#  background-color: #333;#}
-{#}#}
-{##}
-{#.topnav a {#}
-{#  float: left;#}
-{#  color: #f2f2f2;#}
-{#  text-align: center;#}
-{#  padding: 14px 16px;#}
-{#  text-decoration: none;#}
-{#  font-size: 17px;#}
-{#}#}
-{##}
-{#.topnav a:hover {#}
-{#  background-color: #ddd;#}
-{#  color: black;#}
-{#}#}
-{##}
-{#.topnav a.active {#}
-{#  background-color: #04AA6D;#}
-{#  color: white;#}
-{#}#}
-{#.topnav .icon {#}
-{#  display: none;#}
-{#}#}
-{##}
-{#@media screen and (max-width: 600px) {#}
-{#  .topnav a:not(:first-child) {display: none;}#}
-{#  .topnav a.icon {#}
-{#    float: right;#}
-{#    display: block;#}
-{#  }#}
-{#}#}
-{##}
-{#@media screen and (max-width: 600px) {#}
-{#  .topnav.responsive {position: relative;}#}
-{#  .topnav.responsive .icon {#}
-{#    position: absolute;#}
-{#    right: 0;#}
-{#    top: 0;#}
-{#  }#}
-{#  .topnav.responsive a {#}
-{#    float: none;#}
-{#    display: block;#}
-{#    text-align: left;#}
-{#  }#}
-{#}#}
-{#</style>#}
-{#</head>#}
-{#<body>#}
-{##}
-{#<div class="topnav" id="myTopnav">#}
-{#  <a class="active" href='{% url 'home' %}'>StudyCamp</a>#}
-{#  <a class="socials" href='{% url 'post-list' %}'>Feed</a>#}
-{#  <a class="profile" href='{% url 'profile' user.profile.pk %}'>Profile</a>#}
-{#  <a  href='{% url 'products' %}'>Market Place</a>#}
-{#  <a class="contact" href='{% url 'contact' %}'>Contact</a>#}
-{#  <a class="logout" href='{% url 'logout' %}'>Logout</a>#}
-{##}
-{#</div>#}
-{##}
-{#<div style="padding-left:16px">#}
-{#  <h2></h2>#}
-{#</div>#}
-{##}
-{#</body>#}
-{#</html>#}
 
 
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<div class="container">
-<nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand"
-    {% if user.is_authenticated %}
-    href=""
-    {% else %}
-    href=""
-    {% endif %}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    ><i class="fa fa-users"></i> StudyCamp</a>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      </ul>
+    <title>hall-wall</title>
+  </head>
+  <body>
+
+
+  <nav class="navbar fixed-top  navbar-expand-sm navbar-dark" style="background-color: mediumpurple">
+      <div class="container">
+        <a
+            href="#"
+            class="navbar-brand mb-0 h1">
+                StudyCamp
+        </a>
+        <button
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        class="navbar-toggler"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+            class="collapse navbar-collapse"
+            id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a href="{% url 'post-list' %}" class="nav-link">
+                        Hall-Wall
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="{% url 'products' %}" class="nav-link">
+                        MarketPlace
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link
+                    dropdown-toggle"
+                    id="navbarDropdown" role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    >
+                       others
+                    </a>
+                    <ul class="dropdown-menu"
+                    aria-labelledby="navbarDropdown">
+                        <li><a href="{% url 'profile' user.profile.pk %}"
+                        class="dropdown-item">Profile</a></li>
+                        <li><a href="{% url 'contact' %}"
+                        class="dropdown-item">Contact</a></li>
+                        <li><a href="{% url 'logout' %}"
+                        class="dropdown-item">Log-out</a></li>
+
+
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
       <form class="d-flex" method="GET" action="{% url 'profile-search' %}">
         <div class="input-group">
         <span class="input-group-text" id="basic-addon1">@</span>
         <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="
         basic-addon1" name="query" value="{{ request.GET.query }}">
         <button style="border: none; background-color: transparent; box-shadow: none" type="submit"><i class="fa fa-search"></i></button>
-    </div>
+        </div>
       </form>
-      {% if user.is_authenticated %}
-      <div class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user-circle-o"></i></a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="{% url 'profile' user.profile.pk %}">Profile</a></li>
-          <li><a class="dropdown-item" href="">Sign Out</a></li>
-        </ul>
       </div>
-      {% endif %}
-    </div>
-  </div>
-</nav>
-</div>
+    </nav>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+  </body>
+</html>
 
 
 
