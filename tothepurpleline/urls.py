@@ -15,6 +15,7 @@ from socials.views import PostListView, PostDetailView, PostEditView, PostDelete
 from django.conf import settings
 from django.conf.urls.static import static
 
+from carts.views import cart_home
 
 urlpatterns = [
     path('', home_page, name='home'),
@@ -40,6 +41,9 @@ urlpatterns = [
     path('profile/<int:pk>/followers/add', AddFollower.as_view(), name='add-follower'),
     path('profile/<int:pk>/followers/remove', RemoveFollower.as_view(), name='remove-follower'),
     path('search/', UserSearch.as_view(), name='profile-search'),
+
+    path('cart/', cart_home, name='cart'),
+    path('products/', include('django.contrib.auth.urls')),
 
     path("__reload__/", include('django_browser_reload.urls')),
 

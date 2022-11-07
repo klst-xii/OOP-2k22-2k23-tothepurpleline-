@@ -1,7 +1,12 @@
 from django.shortcuts import render
 from .forms import ContactForm
-
+from products.views import Product
 def home_page(request):
+    print(request.session.get("first_name", "Unknown"))
+    list = Product.objects.all()
+    context = {
+        'list': list
+    }
     return render(request, "home_page.html")
 
 

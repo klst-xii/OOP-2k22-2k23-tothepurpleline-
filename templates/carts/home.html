@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'base/css.html' %}
+    {% include 'base/js.css.html' %}
+</head>
+<body>
+{% include 'base/navbar.html' %}
+
+<div class="row">
+    <div class="col-12 col-md-6">
+        {{ object.title }} <br>
+        {{ object.description }} <br
+        {%  if object.image %}
+            <img src="{{ object.image.url }}">
+        {% elif not object.image %}
+            <img src="{% static 'img/item.jpg %}' %}">
+        {% endif %}
+    </div>
+    <div class="col-12 col-md-6">
+        <a href="{% url 'cart:add' pk=object.pk %}" class="btn btn-lg btn-outline-primary text-uppercase"><i class="fas fa-shopping-cart"></i>Add to Cart</a>
+    </div>
+</div>
+
+</body>
+</html>
