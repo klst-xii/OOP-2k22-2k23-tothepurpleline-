@@ -1,4 +1,9 @@
-
+<a class="navbar-brand"
+{% if user.is_authenticated %}
+href=""
+{% else %}
+href=""
+{% endif %}>
 
 <!doctype html>
 <html lang="en">
@@ -14,9 +19,22 @@
   </head>
   <body>
 
+  <div class="container">
+  <nav class="navbar fixed-top  navbar-expand-lg navbar-dark" style="background-color: mediumpurple">
+      <div class="container-fluid">
 
-  <nav class="navbar fixed-top  navbar-expand-sm navbar-dark" style="background-color: mediumpurple">
-      <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <a class="navbar-brand"
+    {% if user.is_authenticated %}
+    href=""
+    {% else %}
+    href=""
+    {% endif %}></a>
+
+
         <a
             href="#"
             class="navbar-brand mb-0 h1">
@@ -81,6 +99,7 @@
       </form>
       </div>
     </nav>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
