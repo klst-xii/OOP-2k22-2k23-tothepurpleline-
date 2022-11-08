@@ -1,6 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Cart, Order
 from django.contrib.auth.decorators import login_required
+
+
+# def cart_home(request):
+    # cart_obj = Cart.objects.new_or_get(request)
+    # return render(request, "carts/home.html", {})
+
 
 def cart_home(request):
     if request.user.is_authenticated:

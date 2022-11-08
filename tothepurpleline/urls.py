@@ -17,7 +17,6 @@ from django.conf.urls.static import static
 
 from carts.views import cart_home
 
-
 urlpatterns = [
     path('', home_page, name='home'),
     path('contact/', contact_page, name='contact'),
