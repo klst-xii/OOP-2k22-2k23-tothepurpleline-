@@ -2,7 +2,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.rtl.min.css" integrity="sha384-OXTEbYDqaX2ZY/BOaZV/yFGChYHtrXH2nyXJ372n2Y8abBhrqacCEe+3qhSHtLjy" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-{#{% include 'base/navbar.html' %}#}
 {% block content %}
 <div class="container">
     <div class="row mt-5">
@@ -18,18 +17,16 @@
             <h3 class="py-4">{{ profile.name }}
                 <span>
                     {% if request.user == user %}
-                        <a href="{% url 'profile-edit' profile.pk %}" style="color: #333"><i class="fa fa-edit">
-                        </i></a>
+                        <a href="{% url 'profile-edit' profile.pk %}" style="color: #333"><i class="fa fa-edit"></i></a>
                     {% endif %}
                 </span>
                 {% else %}
-                <h3>{{ user.username }}
-                <span>
-                    {% if request.user == user %}
-                        <a href="{% url 'profile-edit' profile.pk %}" style="color: #333"><i class="fa fa-edit">
-                        </i> </a>
-                    {% endif %}
-                </span>
+                <h3 class="py-4">{{ user.username }}
+                    <span>
+                        {% if request.user == user %}
+                            <a href="{% url 'profile-edit' profile.pk %}" style="color: #333"><i class="fa fa-edit"></i></a>
+                        {% endif %}
+                    </span>
                 </h3>
                 {% endif %}
             </h3>
@@ -73,29 +70,11 @@
     {% for post in posts %}
     <div class="row justify-content-center mt-5">
         <div class="col-md-8 col-sm-12 border-bottom">
-            <p><a style="text-decoration: none" class="text-primary" href="{% url 'profile' post.author.profile.pk %}"
-            >@{{ post.author }}</a>{{ post.created_on }}</p>
+            <p><a style="text-decoration: none" class="text-primary" href="{% url 'profile' post.author.profile.pk %}">@{{ post.author }}</a> {{ post.created_on }}</p>
             <div class="position-relative">
                 <p>{{ post.body }}</p>
                 <a href="{% url 'post-detail' post.pk %}" class="stretched-link"></a>
             </div>
-
-            <div class="d-flex flex-row">
-                <form method="POST" action="{% url 'like' post.pk %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    <button style="background-color: transparent; border: none; box-shadow: none;" type="submit">
-                        <i class="fa fa-thumbs-up"><span>{{ post.likes.all.count }}</span></i>
-                    </button>
-                </form>
-
-                <form method="POST" action="{% url 'dislike' post.pk %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    <button style="background-color: transparent; border: none; box-shadow: none;" type="submit">
-                        <i class="fa fa-thumbs-down"><span>{{ post.dislikes.all.count }}</span></i>
-                    </button>
-                </form>
         </div>
     </div>
     {% endfor %}
