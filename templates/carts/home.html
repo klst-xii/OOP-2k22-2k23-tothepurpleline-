@@ -47,7 +47,7 @@
             <tr>
                 <th scope="row"></th>
                 <td colspan="4" class="text-right">
-                    <a href="{% url 'products:product_list' %}" class="btn btn-warning mr-4">Continue Shopping</a>
+                    <a href="{% url 'products' %}" class="btn btn-warning mr-4">Continue Shopping</a>
                     <a href="{% url 'payment:checkout' %}" class="btn btn-success mr-4">Proceed to Checkout</a>
                 </td>
             </tr>
@@ -56,7 +56,7 @@
         {% else %}
             <p class="lead">Cart is Empty</p>
             <div class="form">
-                <a href="{% url 'products:product_list' %}" class="btn btn-warning mr-4">Go Shopping</a>
+                <a href="{% url 'products' %}" class="btn btn-warning mr-4">Go Shopping</a>
             </div>
         {% endif %}
     </div>

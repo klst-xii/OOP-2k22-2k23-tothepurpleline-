@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from products.models import Product
 # Create your views here.
 from django.views.generic import ListView
