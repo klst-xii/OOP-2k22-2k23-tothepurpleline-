@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Cart, Order
-
+from django.contrib.auth.decorators import login_required
 
 def cart_home(request):
     if request.user.is_authenticated:
@@ -43,7 +43,7 @@ def add_to_cart(request, pk):
         return redirect('products:products_list')
 
 
-def remove_to_cart(request, pk):
+def remove_from_cart(request, pk):
     item = get_object_or_404(Product, pk=pk)
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
@@ -59,4 +59,44 @@ def remove_to_cart(request, pk):
             return redirect('products:product_list')
     else:
         messages.info(request, "You don't have an active order")
+        return redirect('products:product_list')
+
+
+@login_required
+def increase_cart(request, pk):
+    item = get_object_or_404(Request, pk=pk)
+    order_qs = Order.objects.filter(user=request.user, order=False)
+    if order_qs.exists():
+        order = order_qs[0]
+        if order.orderitems.filter(products=item).exists():
+            order_item = Cart.objects.filter(products=item, user=request.user)[0]
+            if order_item.quantity >= 1:
+                order_item.quantity += 1
+                order_item.save()
+                return redirect('cart:cart_home')
+        else:
+            return redirect('products:product_list')
+    else:
+        return redirect('products:product_list')
+
+
+@login_required
+def decrease_cart(request,pk):
+    item = get_object_or_404(Product, pk=pk)
+    order_qs = Order.objects.filter(user=request.user, ordered=False)
+    if order_qs.exists():
+        order = order_qs[0]
+        if order.orderitems.filter(products=item).exists():
+            order_item = Cart.objects.filter(products=item, user=request.user)[0]
+            if order_item.quantity > 1:
+                order_item.quantity -= 1
+                order_item.save()
+                return redirect('cart:cart_home')
+            else:
+                order.orderitems.remove(order_item)
+                order_item.delete
+                return redirect('cart:cart_home')
+        else:
+            return redirect('products:product_list')
+    else:
         return redirect('products:product_list')

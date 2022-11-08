@@ -42,7 +42,7 @@ urlpatterns = [
     path('profile/<int:pk>/followers/remove', RemoveFollower.as_view(), name='remove-follower'),
     path('search/', UserSearch.as_view(), name='profile-search'),
 
-    path('cart/', cart_home, name='cart'),
+    path('carts/', cart_home, name='cart'),
     path('products/', include('django.contrib.auth.urls')),
 
     path("__reload__/", include('django_browser_reload.urls')),
