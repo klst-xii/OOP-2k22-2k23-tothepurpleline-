@@ -1,21 +1,21 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth import views as logout
 from django.urls import path, include
 from django.urls import re_path
 
-from .views import home_page, contact_page
 from accounts.views import RegisterView, login_page
-from django.contrib.auth import views as auth_views
-from products.views import ProductListView
-from products.views import ProductDetailView
-from products.views import ProductFeaturedListView
-from products.views import ProductFeaturedDetailView
-from products.views import ProductDetailSlugView
-from socials.views import PostListView, PostDetailView, PostEditView, PostDeleteView, CommentDeleteView, ProfileView, ProfileEditView, AddFollower, RemoveFollower, AddLike, AddDislike, UserSearch
-
-from django.conf import settings
-from django.conf.urls.static import static
-
 from cart.views import cart_home
+from products.views import ProductDetailSlugView
+from products.views import ProductDetailView
+from products.views import ProductFeaturedDetailView
+from products.views import ProductFeaturedListView
+from products.views import ProductListView
+from socials.views import PostListView, PostDetailView, PostEditView, PostDeleteView, CommentDeleteView, ProfileView, \
+    ProfileEditView, AddFollower, RemoveFollower, AddLike, AddDislike, UserSearch
+from .views import home_page, contact_page
+
 app_name = 'cart'
 urlpatterns = [
     path('', home_page, name='home'),
@@ -24,7 +24,7 @@ urlpatterns = [
     path('featured/', ProductFeaturedListView.as_view(), name='featured_list'),
     path('featured/<int:pk>', ProductFeaturedDetailView.as_view(), name='featured_detailed'),
     re_path(r'^products/(?P<slug>[\w-]+)/$', ProductDetailSlugView.as_view()),
-    path('logout/', auth_views.LogoutView.as_view(template_name="auth/logout.html"), name='logout'),
+    path('logout/', logout.LogoutView.as_view(template_name="auth/logout.html"), name='logout'),
     path('login', login_page, name='login'),
     path('admin/', admin.site.urls),
     path('products/', ProductListView.as_view(), name='products'),
