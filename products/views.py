@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from products.models import Product
 # Create your views here.
-from django.views.generic import ListView
-from django.views.generic import DetailView
+from django.views.generic import ListView, DetailView
 
 
 class ProductListView(ListView):
