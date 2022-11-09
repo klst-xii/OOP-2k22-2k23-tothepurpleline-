@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.urls import re_path
 
+
 from .views import home_page, contact_page
 from accounts.views import RegisterView, login_page
 from django.contrib.auth import views as auth_views
@@ -10,7 +11,7 @@ from products.views import ProductDetailView
 from products.views import ProductFeaturedListView
 from products.views import ProductFeaturedDetailView
 from products.views import ProductDetailSlugView
-from socials.views import PostListView, PostDetailView, PostEditView, PostDeleteView, CommentDeleteView, ProfileView, ProfileEditView, AddFollower, RemoveFollower, AddLike, AddDislike, UserSearch
+from socials.views import PostListView, PostDetailView, PostEditView, PostDeleteView, CommentDeleteView, ProfileView, ProfileEditView, AddFollower, RemoveFollower, AddLike, AddDislike, UserSearch, ListFollowers, AddCommentLike, AddCommentDislike
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -32,8 +33,11 @@ urlpatterns = [
     path('socials/', PostListView.as_view(), name='post-list'),
     path('socials/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('socials/edit/<int:pk>/', PostEditView.as_view(), name='post-edit'),
+    path('socials/<int:pk>/followers/', ListFollowers.as_view(), name='list-followers'),
     path('socials/delete/<int:pk>/', PostDeleteView.as_view(), name='post-delete'),
     path('socials/<int:post_pk>/comment/delete/<int:pk>/', CommentDeleteView.as_view(), name='comment-delete'),
+    path('socials/<int:post_pk>/comment/<int:pk>/like', AddCommentLike.as_view(), name='comment-like'),
+    path('socials/<int:post_pk>/comment/<int:pk>/dislike', AddCommentDislike.as_view(), name='comment-dislike'),
     path('socials/<int:pk>/like', AddLike.as_view(), name='like'),
     path('socials/<int:pk>/dislike', AddDislike.as_view(), name='dislike'),
     path('profile/<int:pk>/', ProfileView.as_view(), name='profile'),
@@ -45,6 +49,9 @@ urlpatterns = [
     path('cart/', cart_home, name='cart'),
 
     path("__reload__/", include('django_browser_reload.urls')),
+
+
+
 
 ]
 

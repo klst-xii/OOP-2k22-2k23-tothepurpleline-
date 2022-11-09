@@ -62,9 +62,42 @@
                 {% endif %}
             </p>
             <p>{{ comment.comment }}</p>
+
+            <div class="d-flex flex-row">
+                <form method="POST" action="{% url 'comment-like' post.pk comment.pk %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button style="background-color: transparent; border: none; box-shadow: none;" type="submit">
+                        <i class="fa fa-thumbs-up"><span>{{ comment.likes.all.count }}</span></i>
+                    </button>
+                </form>
+
+                <form method="POST" action="{% url 'comment-dislike' post.pk comment.pk %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button style="background-color: transparent; border: none; box-shadow: none;" type="submit">
+                        <i class="fa fa-thumbs-down"><span>{{ comment.dislikes.all.count }}</span></i>
+                    </button>
+                </form>
+                <div>
+                    <button class="remove-default-btn"><i class="fa fa-comment-dots"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="row justify-content-center mt-3 mb-5 d-none">
+        <div class="col-md-5 col-sm-12">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <div class="d-grid gap-2">
+                    <button class="btn btn-success mt-3">Submit!</button>
+                </div>
+            </form>
         </div>
     </div>
     {% endfor %}
+</div>
 </div>
 
 
