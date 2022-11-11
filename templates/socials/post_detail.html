@@ -1,4 +1,5 @@
-{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+{% load static %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.rtl.min.css" integrity="sha384-OXTEbYDqaX2ZY/BOaZV/yFGChYHtrXH2nyXJ372n2Y8abBhrqacCEe+3qhSHtLjy" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% block content %}
@@ -11,13 +12,18 @@
 
         <div class="row justify-content-center mt-3">
         <div class="col-md-5 col-sm-12 border-bottom">
-            <p>
-                <strong>{{ post.author }}</strong>{{ post.created_on }}
+                <div>
+                    <a href="{% url 'profile' post.author.profile.pk %}">
+                        <img class="rounded-circle post-img" height="30" width="30" src="{{ post.author.profile.picture.url }}" alt="" />
+                    </a>
+                    <p class="post-text">
+                    <a style="text-decoration: none" class="text-primary" href="{% url 'profile' post.author.profile.pk %}">@{{ post.author }}</a>{{ post.created_on }}
+                    </p>
+                </div>
                 {% if request.user == post.author %}
-                    <a href="{% url 'post-edit' post.pk %}" style="color: #333;"><i class="fa fa-edit"></i></a>
-                    <a href="{% url 'post-delete' post.pk %}" style="color: #333;"><i class="fa fa-trash"></i></a>
+                    <a href="{% url 'post-edit' post.pk %}" class="edit-color"><i class="fa fa-edit"></i></a>
+                    <a href="{% url 'post-delete' post.pk %}" class="edit-color"><i class="fa fa-trash"></i></a>
                 {% endif %}
-            </p>
             <p>{{ post.body }}</p>
 
             <div class="d-flex flex-row">
@@ -55,12 +61,18 @@
     <div class="row justify-content-center mt-3 mb-5 ">
         <div class="col-md-5 col-sm-12" border-bottom>
             <p>
-                <strong>{{ comment.author }}</strong>{{ comment.created_on }}
+                <div>
+                    <a href="{% url 'profile' comment.author.profile.pk %}">
+                        <img class="rounded-circle post-img" height="30" width="30" src="{{ comment.author.profile.picture.url }}" alt="" />
+                    </a>
+                    <p class="post-text">
+                    <a style="text-decoration: none" class="text-primary" href="{% url 'profile' comment.author.profile.pk %}">@{{ comment.author }}</a>{{ comment.created_on }}
+                    </p>
+                </div>
                 {% if request.user == comment.author %}
 {#                    <a href="{% url 'post-edit' post.pk %}" style="color: #333;"><i class="fa fa-edit"></i></a>#}
                     <a href="{% url 'comment-delete' post.pk comment.pk %}" style="color: #333;"><i class="fa fa-trash"></i></a>
                 {% endif %}
-            </p>
             <p>{{ comment.comment }}</p>
 
             <div class="d-flex flex-row">
@@ -80,12 +92,12 @@
                     </button>
                 </form>
                 <div>
-                    <button class="remove-default-btn"><i class="fa fa-comment-dots"></i></button>
+                    <button class="remove-default-btn"><i class="fa fa-comment-dots" onclick="commentReplyToggle('{{ comment.pk }}')"></i></button>
                 </div>
             </div>
         </div>
     </div>
-     <div class="row justify-content-center mt-3 mb-5 d-none">
+     <div class="row justify-content-center mt-3 mb-5" id="{{ comment.pk }}">
         <div class="col-md-5 col-sm-12">
             <form method="POST">
                 {% csrf_token %}
@@ -94,11 +106,13 @@
                     <button class="btn btn-success mt-3">Submit!</button>
                 </div>
             </form>
+            <div>
+                <button class="remove-default-btn"><i class="far fa-comment-dots"></i></button>
+            </div>
         </div>
     </div>
     {% endfor %}
 </div>
 </div>
-
 
 {% endblock content %}
