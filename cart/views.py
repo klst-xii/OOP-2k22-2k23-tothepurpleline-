@@ -1,7 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Cart, Order
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from products.views import Product
 
+
+# def cart_home(request):
+#     cart_obj = Cart.objects.new_or_get(request)
+#     return render(request, "carts/home.html")
 def cart_home(request):
     if request.user.is_authenticated:
         carts = Cart.objects.filter(user=request.user, purchased=False)
@@ -21,7 +27,7 @@ def cart_home(request):
 
 
 def add_to_cart(request, pk):
-    item = get_objects_or_404(Product, pk=pk)
+    item = get_object_or_404(Product, pk=pk)
     order_item = Cart.objects.get_or_create(products=item, user=request.user)
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
@@ -64,7 +70,7 @@ def remove_from_cart(request, pk):
 
 @login_required
 def increase_cart(request, pk):
-    item = get_object_or_404(Request, pk=pk)
+    item = get_object_or_404(Product, pk=pk)
     order_qs = Order.objects.filter(user=request.user, order=False)
     if order_qs.exists():
         order = order_qs[0]
@@ -81,7 +87,7 @@ def increase_cart(request, pk):
 
 
 @login_required
-def decrease_cart(request,pk):
+def decrease_cart(request, pk):
     item = get_object_or_404(Product, pk=pk)
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():

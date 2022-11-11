@@ -17,6 +17,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from cart.views import add_to_cart
+from cart.views import cart_home, decrease_cart, increase_cart, remove_from_cart
+
+# app_name = 'cart'
 
 urlpatterns = [
     path('', home_page, name='home'),
@@ -46,14 +49,19 @@ urlpatterns = [
 
     path('cart/', include(('cart.urls', 'cart'), namespace='cart')),
     path('payment/', include(('payment.urls', 'payment'), namespace='payment')),
-    # path('products/', include(('products', 'products.urls'), namespace='product')),
+    path('products/', include(('products.urls', 'products'), namespace='products')),
 
     path("__reload__/", include('django_browser_reload.urls')),
-    path('products/', ProductListView.as_view(), name='products'),
 
+    # path('products/', ProductListView.as_view(), name='product_list'),
     path('products/<int:pk>/', ProductDetailView.as_view(), name='detailed'),
     re_path(r'^(?P<slug>[\w-]+)/$', ProductDetailSlugView.as_view()),
 
+    # path('cart/', cart_home, name='cart-home'),
+    path('cart/decrease-item/<int:pk>/', decrease_cart, name='decrease-item'),
+    path('cart/increase-item/<int:pk>/', increase_cart, name='increase-item'),
+    path('cart/remove-item/int<int:pk>/', remove_from_cart, name='remove-item'),
+    path('cart/<int:pk>/add', add_to_cart, name='add'),
 ]
 
 if settings.DEBUG:

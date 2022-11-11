@@ -4,6 +4,7 @@ from django.views.generic import ListView
 from django.views.generic import DetailView
 from django.shortcuts import Http404
 
+
 class ProductListView(ListView):
     queryset = Product.objects.all()
     template_name = "products/list.html"
@@ -11,6 +12,7 @@ class ProductListView(ListView):
     def get_queryset(self, *args, **kwargs):
         request = self.request
         return Product.objects.all()
+
 
 class ProductDetailView(DetailView):
     queryset = Product.objects.all()
@@ -26,6 +28,7 @@ class ProductDetailView(DetailView):
         pk = self.kwargs.get('pk')
         return Product.objects.filter(pk=pk)
 
+
 class ProductFeaturedListView(ListView):
     template_name = "products/list.html"
 
@@ -33,9 +36,11 @@ class ProductFeaturedListView(ListView):
         request = self.request
         return Product.objects.all().featured()
 
+
 class ProductFeaturedDetailView(DetailView):
     queryset = Product.objects.all().featured()
     template_name = "products/featured-detail.html"
+
 
 class ProductDetailSlugView(DetailView):
     queryset = Product.objects.all()
@@ -55,5 +60,3 @@ class ProductDetailSlugView(DetailView):
         except:
             raise Http404("Test Error")
         return instance
-
-
