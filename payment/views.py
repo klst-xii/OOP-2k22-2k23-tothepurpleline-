@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from cart.models import Order
+from cart.models import Order, Cart
 # Create your views here.
 
 from payment.forms import BillingAddressForm

@@ -40,13 +40,13 @@ def add_to_cart(request, pk):
         else:
             order.orderitems.add(order_item[0])
             messages.info(request, "This item was added to your cart!")
-            return redirect('products:products_list')
+            return redirect('products:product_list')
     else:
         order = Order(user=request.user)
         order.save()
         order.orderitems.add(order_item[0])
         messages.info(request, "This item was added to your cart!")
-        return redirect('products:products_list')
+        return redirect('products:product_list')
 
 
 def remove_from_cart(request, pk):
@@ -59,7 +59,7 @@ def remove_from_cart(request, pk):
             order.orderitems.remove(order_item)
             order_item.delete()
             messages.warning(request, "This item was removed from your cart")
-            return redirect('cart:cart_home')
+            return redirect('cart')
         else:
             messages.info(request, "This item was not in your cart")
             return redirect('products:product_list')
@@ -79,7 +79,7 @@ def increase_cart(request, pk):
             if order_item.quantity >= 1:
                 order_item.quantity += 1
                 order_item.save()
-                return redirect('cart:cart_home')
+                return redirect('cart:cart-home')
         else:
             return redirect('products:product_list')
     else:
@@ -97,11 +97,11 @@ def decrease_cart(request, pk):
             if order_item.quantity > 1:
                 order_item.quantity -= 1
                 order_item.save()
-                return redirect('cart:cart_home')
+                return redirect('cart')
             else:
                 order.orderitems.remove(order_item)
                 order_item.delete
-                return redirect('cart:cart_home')
+                return redirect('cart')
         else:
             return redirect('products:product_list')
     else:
