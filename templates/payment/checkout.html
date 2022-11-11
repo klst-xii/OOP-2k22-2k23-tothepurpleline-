@@ -41,7 +41,7 @@
                 </div>
             </div>
             <br>
-            {% if save_address.is_fully_fulfilled %}
+            {% if saved_address.is_fully_fulfilled %}
             <a href="{% url 'payment:payments' %}" class="btn btn-warning btn-md">Make Payment</a>
             {% else %}
             <div class="alert alert-info">
