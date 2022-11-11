@@ -8,10 +8,14 @@ from .models import Post, Comment, UserProfile
 from .form import PostForm, CommentForm
 from django.views.generic.edit import UpdateView, DeleteView
 
+# from shopping_cart.models import Order
 
 class PostListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        posts = Post.objects.all().order_by('-created_on')
+        logged_in_user = request.user
+        posts = Post.objects.filter(
+            author__profile__followers__in=[logged_in_user.id]
+        ).order_by('-created_on')
         form = PostForm()
 
         context = {
@@ -132,12 +136,15 @@ class ProfileView(View):
 
         number_of_followers = len(followers)
 
+        my_orders = Order.objects.filter(is_ordered=True, owner=profile)
+
         context = {
             'user': user,
             'profile': profile,
             'posts': posts,
             'number_of_followers': number_of_followers,
             'is_following': is_following,
+            'my_orders': my_orders
 
         }
 
@@ -230,6 +237,66 @@ class AddDislike(LoginRequiredMixin, View):
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
 
+class AddCommentLike(LoginRequiredMixin, View):
+    def post(self, request, pk, *args, **kwargs):
+        comment = Comment.objects.get(pk=pk)
+
+        is_dislike = False
+
+        for dislike in comment.dislikes.all():
+            if dislike == request.user:
+                is_dislike = True
+                break
+
+        if is_dislike:
+            comment.dislikes.remove(request.user)
+
+        is_like = False
+
+        for like in comment.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+
+        if not is_like:
+            comment.likes.add(request.user)
+
+        if is_like:
+            comment.likes.remove(request.user)
+
+        next = request.POST.get('next', '/')
+        return HttpResponseRedirect(next)
+
+class AddCommentDislike(LoginRequiredMixin, View):
+    def post(self, request, pk, *args, **kwargs):
+        comment = Comment.objects.get(pk=pk)
+
+        is_like = False
+
+        for like in comment.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+
+        if is_like:
+            comment.likes.remove(request.user)
+
+        is_dislike = False
+
+        for dislike in comment.dislikes.all():
+            if dislike == request.user:
+                is_dislike = True
+                break
+
+        if not is_dislike:
+            comment.dislikes.add(request.user)
+
+        if is_dislike:
+            comment.dislikes.remove(request.user)
+
+        next = request.POST.get('next', '/')
+        return HttpResponseRedirect(next)
+
 class UserSearch(View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get('query')
@@ -243,12 +310,14 @@ class UserSearch(View):
 
         return render(request, 'socials/search.html', context)
 
+class ListFollowers(View):
+    def get(self, request, pk, *args, **kwargs):
+        profile = UserProfile.objects.get(pk=pk)
+        followers = profile.followers.all()
 
+        context = {
+            'profile': profile,
+            'followers': followers,
+        }
 
-
-
-
-
-
-
-
+        return render(request, 'socials/followers_list.html', context)

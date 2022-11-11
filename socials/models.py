@@ -4,6 +4,8 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from products.models import Product
+
 User = settings.AUTH_USER_MODEL
 
 class Post(models.Model):
@@ -19,6 +21,8 @@ class Comment(models.Model):
     created_on = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
+    likes = models.ManyToManyField(User, blank=True, related_name='comment_likes')
+    dislikes = models.ManyToManyField(User, blank=True, related_name='comment_dislikes')
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, primary_key=True, verbose_name='user', related_name='profile', on_delete=models.CASCADE)
@@ -29,6 +33,7 @@ class UserProfile(models.Model):
     picture = models.ImageField(upload_to='uploads/profile_pictures', default='uploads/profile-pictures/default.png', blank=True)
     school = models.CharField(max_length=150, blank=True, null=True)
     followers = models.ManyToManyField(User, blank=True, related_name='followers')
+    materials = models.ManyToManyField(Product, blank=True )
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -38,4 +43,3 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
-
