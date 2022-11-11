@@ -1,17 +1,31 @@
+from urllib import request
+
+
 from django.shortcuts import render, Http404
 from products.models import Product
 # Create your views here.
 from django.views.generic import ListView
 from django.views.generic import DetailView
-
+from django.contrib.auth.decorators import login_required
+from shopping_cart.models import Order
 
 
 class ProductListView(ListView):
     queryset = Product.objects.all()
     template_name = "products/list.html"
 
-    def get_queryset(self, *args, **kwargs):
+    def get_queryset(self,  *args, **kwargs):
         request = self.request
+        filtered_orders = Order.objects.filter(owner=request.user.profile, is_ordered=False)
+        current_order_products = []
+        if filtered_orders.exists():
+            user_order = filtered_orders[0]
+            user_order_items = user_order.items.all()
+            current_order_products = [product.product for product in user_order_items]
+
+        context = {
+            'current_order_products': current_order_products
+        }
         return Product.objects.all()
 
 class ProductDetailView(DetailView):
@@ -57,5 +71,7 @@ class ProductDetailSlugView(DetailView):
         except:
             raise Http404("Test Error")
         return instance
+
+
 
 

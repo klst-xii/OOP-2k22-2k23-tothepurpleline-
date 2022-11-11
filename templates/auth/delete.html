@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product</title>
+    {% include 'base/css.html' %}
+    {% include 'base/js.css.html' %}
+</head>
+<body>
+{% include 'base/navbar.html' %}
+{% extends 'auth/list_user.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Delete account" %}{% endblock %}
+
+{% block card-body %}
+    <form method="POST">
+        {% csrf_token %}
+        <p>{% trans "Are you sure you want to delete the account" %}{{ object.email }}?</p>
+        <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
+    </form>
+    <br><p>{% trans "No keep my account" %}</p>
+    <a href="/" class="btn btn-outline-primary">{% trans "Return to site" %}</a>
+
+
+
+{% endblock %}
+</body>
+</html>

@@ -4,7 +4,7 @@ from django.urls import re_path
 
 
 from .views import home_page, contact_page
-from accounts.views import RegisterView, login_page
+from accounts.views import RegisterView, login_page, CustomUserDeleteView
 from django.contrib.auth import views as auth_views
 from products.views import ProductListView
 from products.views import ProductDetailView
@@ -38,6 +38,7 @@ urlpatterns = [
     path('profile/<int:pk>/followers/add', AddFollower.as_view(), name='add-follower'),
     path('profile/<int:pk>/followers/remove', RemoveFollower.as_view(), name='remove-follower'),
     path('search/', UserSearch.as_view(), name='profile-search'),
+    path('<int:pk>/delete/', CustomUserDeleteView.as_view(template_name='auth/delete.html'), name='delete'),
 
 
     path('', include(('products.urls', 'products'), namespace='products')),
@@ -49,6 +50,7 @@ urlpatterns = [
 
     path('cart/', include(('shopping_cart.urls', 'shopping_cart'), namespace='shopping_cart')),
     # path('', include(('socials.urls', 'socials'), namespace='socials')),
+
 
     path("__reload__/", include('django_browser_reload.urls')),
 

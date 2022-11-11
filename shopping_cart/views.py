@@ -11,6 +11,16 @@ from shopping_cart.extras import generate_order_id
 from shopping_cart.models import OrderItem, Order
 from django.contrib.auth.decorators import login_required
 
+
+def purchased(request):
+    my_user_profile = UserProfile.objects.filter(user=request.user).first()
+    my_orders = Order.objects.filter(is_ordered=True, owner=my_user_profile)
+    context = {
+        'my_orders': my_orders
+    }
+
+    return render(request, "purchased.html", context)
+
 def get_user_pending_order(request):
     user_profile = get_object_or_404(UserProfile, user=request.user)
     order = Order.objects.filter(owner=user_profile, is_ordered=True)
@@ -73,7 +83,7 @@ def process_payment(request, order_id):
 
 
 @login_required()
-def update_transaction_records(self, request, order_id):
+def update_transaction_records(self, order_id):
     order_to_purchase = Order.objects.filter(pk=order_id).first()
     order_to_purchase.is_ordered=True
     order_to_purchase.date_ordered=datetime.datetime.now()

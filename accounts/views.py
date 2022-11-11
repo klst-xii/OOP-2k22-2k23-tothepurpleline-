@@ -4,6 +4,9 @@ from django.shortcuts import render, redirect
 from django.views.generic import CreateView
 from django.contrib.auth import login
 from accounts.forms import RegisterForm, LoginForm
+from django.urls import reverse_lazy
+from django.views.generic.edit import DeleteView
+from .models import User
 
 
 def login_page(request):
@@ -25,5 +28,12 @@ class RegisterView(CreateView):
     form_class = RegisterForm
     template_name = 'auth/register.html'
     success_url = '/'
+
+class CustomUserDeleteView(DeleteView):
+    model = User
+    template_name = "auth/delete.html"
+    success_url = reverse_lazy('register')
+
+
 
 
