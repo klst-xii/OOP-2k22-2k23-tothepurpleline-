@@ -11,10 +11,25 @@
 </head>
 <body>
 {% include 'base/navbar.html' %}
-{% for object in object_list %}
-    Title: <a href = "{% url 'detailed' object.id %}"> {{ object.title }}</a><br>
-{% endfor %}
-
+{% block content %}
+    {{ message }}
+    <div class="">
+    {% for object in object_list %}
+        <br>Title: <a href = "{% url 'detailed' object.id %}"> {{ object.title }}</a><br>
+        <div class="col-sm-3">
+            <p>{{ object.name }}</p>
+            <p>Price: P{{ object.price }}</p>
+            {% if object in user.profile.materials.all %}
+            You own this
+            {% elif object in current_order_products %}
+            <a href="{% url 'shopping_cart:order_summary' %}" class="btn btn-warning">Go to Cart</a>
+            {% else %}
+            <a href="{% url 'shopping_cart:add_to_cart' object.id %}" class="btn btn-warning">Add to Cart</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+    </div>
+{% endblock content %}
 
 </body>
 </html>

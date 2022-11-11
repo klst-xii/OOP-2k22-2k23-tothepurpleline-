@@ -44,12 +44,9 @@ INSTALLED_APPS = [
     'django.shortcuts',
     'socials',
     'crispy_forms',
-    'tailwind',
     'theme',
     'django_browser_reload',
-    'cart',
-    'payment',
-    'music',
+    'shopping_cart'
 
 ]
 

@@ -16,20 +16,13 @@ from socials.views import PostListView, PostDetailView, PostEditView, PostDelete
 from django.conf import settings
 from django.conf.urls.static import static
 
-from cart.views import cart_home
-
 urlpatterns = [
     path('', home_page, name='home'),
     path('contact/', contact_page, name='contact'),
     path('register/', RegisterView.as_view(), name='register'),
-    path('featured/', ProductFeaturedListView.as_view(), name='featured_list' ),
-    # path('featured/<int:pk>', ProductFeaturedDetailView.as_view(), name='featured_detailed'),
-    re_path(r'^products/(?P<slug>[\w-]+)/$', ProductDetailSlugView.as_view()),
     path('logout/', auth_views.LogoutView.as_view(template_name="auth/logout.html"), name='logout'),
     path('login', login_page, name='login'),
     path('admin/', admin.site.urls),
-    path('products/', ProductListView.as_view(), name='products'),
-    path('products/<int:pk>', ProductDetailView.as_view(), name='detailed'),
     path('socials/', PostListView.as_view(), name='post-list'),
     path('socials/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('socials/edit/<int:pk>/', PostEditView.as_view(), name='post-edit'),
@@ -46,14 +39,22 @@ urlpatterns = [
     path('profile/<int:pk>/followers/remove', RemoveFollower.as_view(), name='remove-follower'),
     path('search/', UserSearch.as_view(), name='profile-search'),
 
-    path('cart/', cart_home, name='cart'),
+
+    path('', include(('products.urls', 'products'), namespace='products')),
+    path('featured/', ProductFeaturedListView.as_view(), name='featured_list'),
+    path('products/<int:pk>', ProductDetailView.as_view(), name='detailed'),
+    # path('featured/<int:pk>', ProductFeaturedDetailView.as_view(), name='featured_detailed'),
+    re_path(r'^products/(?P<slug>[\w-]+)/$', ProductDetailSlugView.as_view()),
+    # path('', include('django.contrib.auth.urls')),
+
+    path('cart/', include(('shopping_cart.urls', 'shopping_cart'), namespace='shopping_cart')),
+    # path('', include(('socials.urls', 'socials'), namespace='socials')),
 
     path("__reload__/", include('django_browser_reload.urls')),
 
-
-
-
 ]
+
+
 
 if settings.DEBUG:
     urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -8,6 +8,7 @@ from .models import Post, Comment, UserProfile
 from .form import PostForm, CommentForm
 from django.views.generic.edit import UpdateView, DeleteView
 
+from shopping_cart.models import Order
 
 class PostListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
@@ -135,12 +136,15 @@ class ProfileView(View):
 
         number_of_followers = len(followers)
 
+        my_orders = Order.objects.filter(is_ordered=True, owner=profile)
+
         context = {
             'user': user,
             'profile': profile,
             'posts': posts,
             'number_of_followers': number_of_followers,
             'is_following': is_following,
+            'my_orders': my_orders
 
         }
 

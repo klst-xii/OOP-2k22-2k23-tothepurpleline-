@@ -4,6 +4,8 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from products.models import Product
+
 User = settings.AUTH_USER_MODEL
 
 class Post(models.Model):
@@ -31,6 +33,7 @@ class UserProfile(models.Model):
     picture = models.ImageField(upload_to='uploads/profile_pictures', default='uploads/profile-pictures/default.png', blank=True)
     school = models.CharField(max_length=150, blank=True, null=True)
     followers = models.ManyToManyField(User, blank=True, related_name='followers')
+    materials = models.ManyToManyField(Product, blank=True )
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

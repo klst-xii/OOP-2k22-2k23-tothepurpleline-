@@ -1,5 +1,7 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.db import models
+from django.conf import settings
+from products.models import Product
 
 
 class UserManager(BaseUserManager):
@@ -43,10 +45,12 @@ class User(AbstractBaseUser):
     email = models.EmailField(max_length=255, unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    user_name = models.CharField(max_length=50, null=True, unique=True)
     active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
+
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
