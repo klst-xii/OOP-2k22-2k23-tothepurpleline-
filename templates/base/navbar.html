@@ -68,8 +68,12 @@ href=""
                     </a>
                     <ul class="dropdown-menu"
                     aria-labelledby="navbarDropdown">
+                    {% if user.is_authenticated %}
                         <li><a href="{% url 'profile' user.profile.pk %}"
                         class="dropdown-item">Profile</a></li>
+                    {% endif %}
+                        <li><a href="{% url 'cart' %}"
+                        class="dropdown-item">MyCart</a></li>
                         <li><a href="{% url 'contact' %}"
                         class="dropdown-item">Contact</a></li>
                         <li><a href="{% url 'logout' %}"
