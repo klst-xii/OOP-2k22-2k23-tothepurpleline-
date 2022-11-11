@@ -1,9 +1,8 @@
-from django.shortcuts import render
 from products.models import Product
 # Create your views here.
 from django.views.generic import ListView
 from django.views.generic import DetailView
-
+from django.shortcuts import Http404
 
 class ProductListView(ListView):
     queryset = Product.objects.all()
@@ -24,7 +23,7 @@ class ProductDetailView(DetailView):
 
     def get_queryset(self, *args, **kwargs):
         request = self.request
-        pk =self.kwargs.get('pk')
+        pk = self.kwargs.get('pk')
         return Product.objects.filter(pk=pk)
 
 class ProductFeaturedListView(ListView):
