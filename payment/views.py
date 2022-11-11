@@ -46,4 +46,4 @@ def payment(request):
         item.purchased = True
         item.save()
 
-    return redirect('cart:cart_home')
+    return redirect('cart:cart-home')

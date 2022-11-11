@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 
+
 # Create your models here.
 
 class BillingAddress(models.Model):
@@ -17,9 +18,9 @@ class BillingAddress(models.Model):
         field_names = [f.name for f in self._meta.get_fields()]
         for field_name in field_names:
             value = getattr(self, field_name)
-            if value is None or value=='':
+            if value is None or value == '':
                 return False
         return True
 
     class Meta:
-        verbose_name_plural = "Billing Address"
+        verbose_name_plural = "Billing Addresses"
