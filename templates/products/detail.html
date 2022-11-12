@@ -9,16 +9,26 @@
 <body>
 {% include 'base/navbar.html' %}
 {% load static %}
-<div class="row">
-    <div class="col-12 col-md-6">
-        {{ objects.title }} <br>
-        {{ object.description }} <br>
-        {% if object.image %}
-            <img src="{{ object.image.url }}">
-        {% elif not object.image %}
-            <img src="{% static 'img/item.jpg' %}">
-        {% endif %}
-    </div>
+<img class="img-thumbnail" src="{{ object.image.url }}"height="50">
+{{ objects.title }} <br>
+        <details>
+                <summary>Info</summary>
+                <p>
+                        <h5> Description : {{ object.description }}</h3>
+                        <h5> Price : {{ object.price }} </h3>
+
+                </p>
+	</details>
+{#<div class="row">#}
+{#    <div class="col-12 col-md-6">#}
+{#        {{ objects.title }} <br>#}
+{#        {{ object.description }} <br>#}
+{#        {% if object.image %}#}
+{#            <img src="{{ object.image.url }}">#}
+{#        {% elif not object.image %}#}
+{#            <img src="{% static 'img/item.jpg' %}">#}
+{#        {% endif %}#}
+{#    </div>#}
     <div class="col-12 col-md-6">
         <a href="{% url 'add' pk=object.id %}" class="btn btn-lg btn-outline-primary text-uppercase"><i class="fas fa-shopping-cart"></i>Add to Cart</a>
     </div>

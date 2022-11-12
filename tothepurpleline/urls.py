@@ -2,16 +2,16 @@ from django.contrib import admin
 from django.urls import path, include
 from django.urls import re_path
 
-
+from accounts import views
 from .views import home_page, contact_page
-from accounts.views import RegisterView, login_page
+from accounts.views import *
 from django.contrib.auth import views as auth_views
 from products.views import ProductListView
 from products.views import ProductDetailView
 from products.views import ProductFeaturedListView
 # from products.views import ProductFeaturedDetailView
 from products.views import ProductDetailSlugView
-from socials.views import PostListView, PostDetailView, PostEditView, PostDeleteView, CommentDeleteView, ProfileView, ProfileEditView, AddFollower, RemoveFollower, AddLike, AddDislike, UserSearch, ListFollowers, AddCommentLike, AddCommentDislike
+from socials.views import *
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -45,6 +45,7 @@ urlpatterns = [
     path('profile/edit/<int:pk>/', ProfileEditView.as_view(), name='profile-edit'),
     path('profile/<int:pk>/followers/add', AddFollower.as_view(), name='add-follower'),
     path('profile/<int:pk>/followers/remove', RemoveFollower.as_view(), name='remove-follower'),
+    # path('profile/edit/<int:pk>/', views.user_delete, name='delete'),
     path('search/', UserSearch.as_view(), name='profile-search'),
 
     path('cart/', include(('cart.urls', 'cart'), namespace='cart')),

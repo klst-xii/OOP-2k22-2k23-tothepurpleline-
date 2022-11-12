@@ -49,7 +49,7 @@ def add_to_cart(request, pk):
         return redirect('products:product_list')
 
 
-def remove_from_cart(request, pk):
+def remove_from_cart(request, pk): #ito ba yung post niyo kumbaga?
     item = get_object_or_404(Product, pk=pk)
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
@@ -59,7 +59,7 @@ def remove_from_cart(request, pk):
             order.orderitems.remove(order_item)
             order_item.delete()
             messages.warning(request, "This item was removed from your cart")
-            return redirect('cart')
+            return redirect('cart:cart-home')
         else:
             messages.info(request, "This item was not in your cart")
             return redirect('products:product_list')
